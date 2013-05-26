@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# TODO TODO TODO TODO TODO
-
 # --                                                            ; {{{1
 #
 # File        : rsync-rot.bash
 # Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-# Date        : 2013-05-23
+# Date        : 2013-05-26
 #
 # Copyright   : Copyright (C) 2013  Felix C. Stegerman
 # Licence     : GPLv2
@@ -16,7 +14,7 @@
 set -e
 export LC_COLLATE=C
 date="$( date +'%FT%T' )"   # no spaces!
-usage='rsync-rot.bash <n> <to> <arg(s)>'
+usage='rsync-rot.bash <n> <from> <to> <arg(s)>'
 
 # --
 
@@ -36,10 +34,17 @@ function pipe_ckh ()
 }                                                               # }}}1
 
 # Usage: grep0 [<arg(s)>]
-# Runs grep <arg(s)> but returns 0 if grep returned 0 or 1; and 1 if
-# grep returned something else.  Thus, only returns non-zero if grep
-# actually failed, not if it simply found nothing.
 function grep0 () { grep "$@" || [ "$?" -eq 1 ]; }
+
+# Usage: head_neg <K>
+# Print all but the last $K lines of STDIN, like GNU head -n -$K.
+function head_neg ()
+{                                                               # {{{1
+  local k="$1" lines=() line n i
+  while IFS= read -r line; do lines+=( "$line" ); done
+  n="$(( ${#lines[@]} - k ))"
+  for (( i = 0; i < n; ++i )); do printf '%s\n' "${lines[i]}"; done
+}                                                               # }}}1
 
 # --
 
