@@ -14,7 +14,7 @@
 set -e
 export LC_COLLATE=C
 date="$( date +'%FT%T' )"   # no spaces!
-usage='rsync-rot.bash <n> <from> <to> <arg(s)>'
+usage='rsync-rot.bash <n> <from> <base_dir> <arg(s)>'
 
 # --
 
@@ -55,18 +55,21 @@ function ls_backups () { ls "$1" | grep0 -E '^[0-9]{4}-'; pipe_ckh; }
 function last_backup () { ls_backups "$1" | tail -n 1; pipe_ckh; }
 
 # Usage: obsolete_backups <dir>
+# NB: b/c busybox has no `head -n -$K` we use head_neg instead.
 function obsolete_backups ()
-{ ls_backups "$1" | head -n -"$keep_last"; pipe_ckh; }
+{ ls_backups "$1" | head_neg "$keep_last"; pipe_ckh; }
 
 # Usage: cp_last_backup <dir> <path>
 # Copies last backup in <dir> (if one exists) to <path> using hard
 # links.
 # NB: call before new backup (or dir creation)!
+# NB: b/c busybox has no `cp -T` we `rm -rf <path>` before copying.
 function cp_last_backup ()
 {                                                               # {{{1
   local dir="$1" path="$2" ; local last="$( last_backup "$dir" )"
   if [ -n "$last" -a -e "$dir/$last" ]; then
-    run cp -alT "$dir/$last" "$path"
+    run rm -fr "$path"
+    run cp -al "$dir/$last" "$path"
   fi
 }                                                               # }}}1
 
@@ -83,11 +86,12 @@ function rm_obsolete_backups ()
 # --
 
 [ "$#" -lt 3 ] && die "Usage: $usage"
-keep_last="$1" base_dir="$2" ; shift 2 ; to="$base_dir/$date"
+keep_last="$1" from="$2" base_dir="$3" ; shift 3
+to="$base_dir/$date"
 
-run mkdir -p "$to"
+run mkdir -p "$base_dir"
 cp_last_backup "$base_dir" "$to"
-run rsync "$@" "$to"/
+run rsync "$@" "$from"/ "$to"/
 rm_obsolete_backups "$base_dir"
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
