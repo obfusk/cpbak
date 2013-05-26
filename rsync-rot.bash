@@ -19,7 +19,7 @@ usage='rsync-rot.bash <n> <from> <base_dir> <arg(s)>'
 # --
 
 # Usage: die <msg(s)>
-function die () { echo "$@" 2>&1; exit 1; }
+function die () { echo "$@" >&2; exit 1; }
 
 # Usage: run <cmd> <arg(s)>
 function run () { echo "==> $@"; "$@"; echo; }
