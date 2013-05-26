@@ -40,7 +40,7 @@ function grep0 () { grep "$@" || [ "$?" -eq 1 ]; }
 # Print all but the last $K lines of STDIN, like GNU head -n -$K.
 function head_neg ()
 {                                                               # {{{1
-  local k="$1" lines=() line n i
+  local -i k="$1" n i ; local lines=() line
   while IFS= read -r line; do lines+=( "$line" ); done
   n="$(( ${#lines[@]} - k ))"
   for (( i = 0; i < n; ++i )); do printf '%s\n' "${lines[i]}"; done
