@@ -12,7 +12,6 @@
 ## TODO
 
   * write! + review! + test!
-  * 2am/4am/...
 
 ## Description
 []: {{{1
@@ -43,6 +42,13 @@
   These instructions assume that you've already setup e.g. srvbak on
   `rem`, with `chgrp_to=srvbak` and cron job, but have not yet added
   the srvbak user.
+
+### Clone
+
+  Clone the cpbak repository on `loc`:
+
+    $ mkdir -p /opt/src
+    $ git clone https://github.com/noxqsgit/cpbak.git /opt/src/cpbak
 
 ### Users
 []: {{{1
@@ -80,6 +86,42 @@
 
 []: }}}1
 
+### srvbak (un)locking
+[]: {{{1
+
+  If you're using srvbak, on `loc`:
+
+    $ cd /opt/src/srvbak
+    $ cp -i srvbak.sudoers.sample /etc/sudoers.d/srvbak
+    $ cp -i srvbak-lock.bash{.sample,}
+    $ cp -i srvbak-unlock.bash{.sample,}
+    $ chmod +x srvbak-{,un}lock.bash
+    $ vim srvbak-{,un}lock.bash   # set base_dir
+
+[]: }}}1
+
+### Scripts
+[]: {{{1
+
+#### srvbak@rem
+
+    $ mkdir -p ~/bin
+    $ cp -i .../ssh-cmd.nasbak.sample ~/bin/ssh-cmd
+    $ chmod +x ~/bin/ssh-cmd
+    $ vim ~/bin/ssh-cmd
+
+#### nasbak@nas
+
+    $ mkdir -p ~/bin
+
+    $ cp -i .../ssh-cmd.srvbak.sample ~/bin/ssh-cmd
+    $ chmod +x ~/bin/ssh-cmd
+    $ vim ~/bin/ssh-cmd
+
+    $ cp -i .../rsync-rot.bash
+
+[]: }}}1
+
 ## ... TODO ...
 
 ... srvbak-lock.bash.sample
@@ -96,28 +138,6 @@
     total size is 50175  speedup is 14.26
     UNLOCK
 
-    $ cat ssh-cmd.bash
-    #!/bin/sh
-
-    rsync_cmd='rsync --server --sender -vlogDtpre.iLsf . __foo__/'
-
-    # --
-
-    set -e
-
-    case "$SSH_ORIGINAL_COMMAND" in
-      "$rsync_cmd")
-        echo LOCK >&2
-        $rsync_cmd ; ret="$?"
-        echo UNLOCK >&2
-        exit "$ret"
-      ;;
-      *)
-        echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
-        exit 1
-      ;;
-    esac
-
 ### Cron
 []: {{{1
 
@@ -126,7 +146,7 @@
 
 ### Using cron.daily
 
-    $ cp -i .../cpbak.cron.sample /etc/cron.daily/cpbak
+    $ cp -i /opt/src/cpbak/cpbak.cron.sample /etc/cron.daily/cpbak
     $ vim /etc/cron.daily/cpbak
     $ chmod +x /etc/cron.daily/cpbak
 
@@ -139,7 +159,7 @@
   Then:
 
     $ mkdir -p /etc/cron.4am
-    $ cp -i .../cpbak.cron.sample /etc/cron.4am/cpbak
+    $ cp -i /opt/src/cpbak/cpbak.cron.sample /etc/cron.4am/cpbak
     $ vim /etc/cron.4am/cpbak
     $ chmod +x /etc/cron.4am/cpbak
 
