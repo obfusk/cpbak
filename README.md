@@ -22,16 +22,17 @@
 
   cpbak is a set of scripts and templates for the following scenario:
 
-  You have a remote server (rem) with a backup (e.g. srvbak [2]) cron
-  job (that runs at e.g. 2am); a local server (loc) with a cpbak cron
-  job (that runs at e.g. 4am); and a local file server (nas).
+  You have a remote server (`rem`) with a backup (e.g. srvbak [2])
+  cron job (that runs at e.g. 2am); a local server (`loc`) with a
+  cpbak cron job (that runs at e.g. 4am); and a local file server
+  (`nas`).
 
-  The cpbak cron job on loc uses ssh to log in to nas and use rsync to
-  copy the backup on rem to nas.  It uses ssh agent forwarding to
-  temporarily allow nas to access rem.
+  The cpbak cron job on `loc` uses ssh to log in to `nas` and use
+  rsync to copy the backup on `rem` to `nas`.  It uses ssh agent
+  forwarding to temporarily allow `nas` to access `rem`.
 
-  In case you also want to copy backups on loc to nas, you can just
-  use cpbak with rem=loc.
+  In case you also want to copy backups on `loc` to `nas`, you can
+  just use cpbak with `rem`=`loc`.
 
   You may be able to adapt cpbak to other (similar) scenarios as well.
 
