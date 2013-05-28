@@ -13,6 +13,13 @@
 
   * write! + review! + test!
 
+    $ rsync -e 'ssh -p 2222' -av --delete test@localhost:__foo__/ \
+      ./__foo__/
+    LOCK
+    ...
+    UNLOCK
+
+
 ## Description
 []: {{{1
 
@@ -39,9 +46,17 @@
 
 ## Install and Configure
 
+[]: {{{1
+
   These instructions assume that you've already setup e.g. srvbak on
   `rem`, with `chgrp_to=srvbak` and cron job, but have not yet added
   the srvbak user.
+
+  Replace `$REM` w/ the name of the backup host (`rem` in the
+  example); repeat the instructions for `rem` for all backup hosts if
+  there is more than one.
+
+[]: }}}1
 
 ### Clone
 
@@ -89,7 +104,7 @@
 ### srvbak (un)locking
 []: {{{1
 
-  If you're using srvbak, on `loc`:
+  When using srvbak, on `rem`:
 
     $ cd /opt/src/srvbak
     $ cp -i srvbak.sudoers.sample /etc/sudoers.d/srvbak
@@ -106,62 +121,50 @@
 #### srvbak@rem
 
     $ mkdir -p ~/bin
-    $ cp -i .../ssh-cmd.nasbak.sample ~/bin/ssh-cmd
+    $ cp -i .../ssh-cmd.srvbak.sample ~/bin/ssh-cmd
     $ chmod +x ~/bin/ssh-cmd
-    $ vim ~/bin/ssh-cmd
 
 #### nasbak@nas
 
     $ mkdir -p ~/bin
-
-    $ cp -i .../ssh-cmd.srvbak.sample ~/bin/ssh-cmd
+    $ cp -i .../rsync-rot.bash ~/bin/
+    $ cp -i .../ssh-cmd.nasbak.sample ~/bin/ssh-cmd
     $ chmod +x ~/bin/ssh-cmd
-    $ vim ~/bin/ssh-cmd
-
-    $ cp -i .../rsync-rot.bash
 
 []: }}}1
-
-## ... TODO ...
-
-... srvbak-lock.bash.sample
-... srvbak-unlock.bash.sample
-... srvbak.sudoers.sample
-
-
-    $ rsync -e 'ssh -p 2222' -av --delete test@localhost:__foo__/ \
-      ./__foo__/
-    LOCK
-    receiving incremental file list
-
-    sent 65 bytes  received 3453 bytes  7036.00 bytes/sec
-    total size is 50175  speedup is 14.26
-    UNLOCK
 
 ### Cron
 []: {{{1
 
-  Install the cpbak cron job on `loc`.  If you want reports per email,
+  Install the cpbak cron job(s) on `loc`.  Replace `$REM` w/ the name
+  of the backup host (e.g. `rem`).  If you want reports per email,
   install mailer [3].
 
-### Using cron.daily
+    $ cp /opt/src/cpbak/... ...
 
-    $ cp -i /opt/src/cpbak/cpbak.cron.sample /etc/cron.daily/cpbak
-    $ vim /etc/cron.daily/cpbak
-    $ chmod +x /etc/cron.daily/cpbak
+### Either using cron.daily
 
-### With e.g. cron.4am
+    $ cp -i /opt/src/cpbak/cpbak.cron.rem.sample \
+      /etc/cron.daily/cpbak-$REM
+    $ vim /etc/cron.daily/cpbak-$REM
+    $ chmod +x /etc/cron.daily/cpbak-$REM
+
+### or with e.g. cron.4am
 
   Add the following line to /etc/crontab:
 
     25 2 * * * root  cd / && run-parts --report /etc/cron.4am
 
-  Then:
+  And:
 
     $ mkdir -p /etc/cron.4am
-    $ cp -i /opt/src/cpbak/cpbak.cron.sample /etc/cron.4am/cpbak
-    $ vim /etc/cron.4am/cpbak
-    $ chmod +x /etc/cron.4am/cpbak
+
+  Then:
+
+    $ cp -i /opt/src/cpbak/cpbak.cron.rem.sample \
+      /etc/cron.4am/cpbak-$REM
+    $ vim /etc/cron.4am/cpbak-$REM
+    $ chmod +x /etc/cron.4am/cpbak-$REM
 
 []: }}}1
 
