@@ -47,15 +47,36 @@
 ### Users
 []: {{{1
 
-    rem$  adduser --system --group --shell /bin/bash \
-            --home /var/lib/srvbak --disabled-password srvbak
-
     loc$  adduser --system --group --shell /bin/bash \
             --home /var/lib/cpbak --disabled-password cpbak
+
+    rem$  adduser --system --group --shell /bin/bash \
+            --home /var/lib/srvbak --disabled-password srvbak
 
     nas$  adduser --system --group --shell /bin/sh \
             --home /var/lib/nasbak --disabled-password nasbak
           # or something equivalent
+
+[]: }}}1
+
+### Keys
+[]: {{{1
+
+    cpbak@loc$  ssh-keygen    # no password
+
+    srvbak@rem$ ssh-keygen    # no password
+    srvbak@rem$ vim .ssh/authorized_keys
+    # on a single line, add:
+    #   command="./ssh-cmd.bash",no-agent-forwarding,
+    #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
+
+    nasbak@nas$ vim .ssh/authorized_keys
+    # on a single line, add:
+    #   command="./ssh-cmd.bash",
+    #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
+
+  Replace `...KEY...` with the contents of `cpbak@loc`'s
+  `~/.ssh/id_rsa.pub`.
 
 []: }}}1
 
