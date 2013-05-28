@@ -39,25 +39,52 @@
 []: }}}1
 
 ## Install and Configure
+
+  These instructions assume that you've already setup e.g. srvbak on
+  `rem`, with `chgrp_to=srvbak` and cron job, but have not yet added
+  the srvbak user.
+
+### Users
 []: {{{1
 
-  ...
+    rem$  adduser --system --group --shell /bin/bash \
+            --home /var/lib/srvbak --disabled-password srvbak
+
+    loc$  adduser --system --group --shell /bin/bash \
+            --home /var/lib/cpbak --disabled-password cpbak
+
+    nas$  adduser --system --group --shell /bin/sh \
+            --home /var/lib/nasbak --disabled-password nasbak
+          # or something equivalent
 
 []: }}}1
 
-## Run
+... TODO ...
+
+### Cron
 []: {{{1
 
-  ...
+  Install the cpbak cron job on `loc`.  If you want reports per email,
+  install mailer [3].
 
-[]: }}}1
+### Using cron.daily
 
-## Cron
-[]: {{{1
+    $ cp -i .../cpbak.cron.sample /etc/cron.daily/cpbak
+    $ vim /etc/cron.daily/cpbak
+    $ chmod +x /etc/cron.daily/cpbak
 
-  ... mailer [3] ...
+### With e.g. cron.4am
 
-  ...
+  Add the following line to /etc/crontab:
+
+    25 2 * * * root  cd / && run-parts --report /etc/cron.4am
+
+  Then:
+
+    $ mkdir -p /etc/cron.4am
+    $ cp -i .../cpbak.cron.sample /etc/cron.4am/cpbak
+    $ vim /etc/cron.4am/cpbak
+    $ chmod +x /etc/cron.4am/cpbak
 
 []: }}}1
 
