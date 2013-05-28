@@ -67,12 +67,12 @@
     srvbak@rem$ ssh-keygen    # no password
     srvbak@rem$ vim .ssh/authorized_keys
     # on a single line, add:
-    #   command="./ssh-cmd.bash",no-agent-forwarding,
+    #   command="./bin/ssh-cmd.bash",no-agent-forwarding,
     #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
 
     nasbak@nas$ vim .ssh/authorized_keys
     # on a single line, add:
-    #   command="./ssh-cmd.bash",
+    #   command="./bin/ssh-cmd.bash",
     #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
 
   Replace `...KEY...` with the contents of `cpbak@loc`'s
@@ -80,7 +80,43 @@
 
 []: }}}1
 
-... TODO ...
+## ... TODO ...
+
+... srvbak-lock.bash.sample
+... srvbak-unlock.bash.sample
+... srvbak.sudoers.sample
+
+
+    $ rsync -e 'ssh -p 2222' -av --delete test@localhost:__foo__/ \
+      ./__foo__/
+    LOCK
+    receiving incremental file list
+
+    sent 65 bytes  received 3453 bytes  7036.00 bytes/sec
+    total size is 50175  speedup is 14.26
+    UNLOCK
+
+    $ cat ssh-cmd.bash
+    #!/bin/sh
+
+    rsync_cmd='rsync --server --sender -vlogDtpre.iLsf . __foo__/'
+
+    # --
+
+    set -e
+
+    case "$SSH_ORIGINAL_COMMAND" in
+      "$rsync_cmd")
+        echo LOCK >&2
+        $rsync_cmd ; ret="$?"
+        echo UNLOCK >&2
+        exit "$ret"
+      ;;
+      *)
+        echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
+        exit 1
+      ;;
+    esac
 
 ### Cron
 []: {{{1

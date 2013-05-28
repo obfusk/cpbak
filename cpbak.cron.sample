@@ -1,0 +1,27 @@
+#!/bin/bash
+
+name=remote-server
+host=file-server
+user=nasbak
+
+# --
+
+set -e
+
+date="$( date +'%F %T' )"
+info="cpbak of $name @ $date"
+export MAILER_SUBJECT="$info"
+
+mkdir -p /var/log/cpbak
+
+{
+  TODO: move to script -- run as cpbak
+  echo "$info" ; echo
+  eval "$( ssh-agent -s )" ; ssh-add
+  ssh -A "$user@$host" "./bin/cpbak-$name"
+  echo
+  END TODO
+} 2>&1 | tee -a /var/log/cpbak/"$name".log \
+       | /opt/src/mailer/mailer.bash
+
+# vim: set tw=70 sw=2 sts=2 et fdm=marker :
