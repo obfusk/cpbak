@@ -13,12 +13,6 @@
 
   * write! + review! + test!
 
-    $ rsync -e 'ssh -p 2222' -av --delete test@localhost:__foo__/ \
-      ./__foo__/
-    LOCK
-    ...
-    UNLOCK
-
 ## Description
 []: {{{1
 
@@ -40,6 +34,12 @@
   just use cpbak with `rem`=`loc`.
 
   You may be able to adapt cpbak to other (similar) scenarios as well.
+
+  By default cpbak uses `rsync-rot.bash` to create a rotating,
+  incremental backup.  Backups are kept in timestamped directories
+  inside a base directory on `nas`.  First, the last backup (if any)
+  is copied to the location of the new backup, using hard links; then
+  rsync is run; afterwards obsolete backups are removed.
 
 []: }}}1
 

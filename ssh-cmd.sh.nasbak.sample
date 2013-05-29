@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+names='rem'     # server names; e.g. 'foo bar baz'
+
+# --
+
+# NB: a nas may not have bash installed by default -- a static bash in
+# ~/bin/ can be used instead.
+
+bash=` which bash ` || bash="$HOME"/bin/bash
+
+# --
+
+for name in $names; do
+  script="./bin/cpbak-$name.bash"
+  if [ "$SSH_ORIGINAL_COMMAND" == "$script" ]; then
+    exec "$script" ; exit 1
+  fi
+done
+
+echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
+exit 1

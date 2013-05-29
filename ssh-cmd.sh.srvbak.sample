@@ -1,10 +1,16 @@
 #!/bin/sh
 
+set -e
+
 rsync_cmd='rsync --server --sender -vlogDtpre.iLsf . __foo__/'
 
-# --
+$ rsync -e 'ssh -p 2222' -av --delete test@localhost:__foo__/ \
+  ./__foo__/
+LOCK
+...
+UNLOCK
 
-set -e
+# --
 
 case "$SSH_ORIGINAL_COMMAND" in
   "$rsync_cmd")

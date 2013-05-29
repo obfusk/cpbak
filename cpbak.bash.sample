@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+name=rem                          # change to e.g. hostname
+host=rem                          # change to hostname/ip of server
+user=srvbak                       # change to username on server
+
+from=/__data/srvbak               # srvbak dir on server
+to_base="$HOME"/backups/"$name"   # backups in subdirs
+keep_last=14                      # keep last 14 backups
+
+# --
+
+# NB: use $BASH b/c a nas may not have bash installed by default -- a
+# static bash in ~/bin/ can be used instead.
+
+"$BASH" "$HOME"/bin/rsync-rot.bash \
+  "$keep_last" "$user@$host:$from" "$to_base" -a -v --delete
+
+# vim: set tw=70 sw=2 sts=2 et fdm=marker :

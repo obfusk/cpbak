@@ -2,13 +2,13 @@
 
 set -e
 
-name=rem
-host=nas
-user=nasbak
+name=rem        # change to e.g. hostname
+host=nas        # change to hostname/ip of file server
+user=nasbak     # change to username on file server
 
 # --
 
-echo "cpbak of $name @ ` date +'%F %T' `" ; echo
+echo "cpbak of $name @ $( date +'%F %T' )" ; echo
 eval "$( ssh-agent -s )" ; ssh-add
 ssh -A "$user@$host" "./bin/cpbak-$name.bash"
 echo
