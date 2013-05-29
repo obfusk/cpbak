@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+name=rem
+host=nas
+user=nasbak
+
+# --
+
+echo "cpbak of $name @ ` date +'%F %T' `" ; echo
+eval "$( ssh-agent -s )" ; ssh-add
+ssh -A "$user@$host" "./bin/cpbak-$name.bash"
+echo
+
+# vim: set tw=70 sw=2 sts=2 et fdm=marker :

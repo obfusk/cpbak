@@ -19,7 +19,6 @@
     ...
     UNLOCK
 
-
 ## Description
 []: {{{1
 
@@ -129,7 +128,14 @@
     $ mkdir -p ~/bin
     $ cp -i .../rsync-rot.bash ~/bin/
     $ cp -i .../ssh-cmd.nasbak.sample ~/bin/ssh-cmd
+    $ vim ~/bin/ssh-cmd
     $ chmod +x ~/bin/ssh-cmd
+
+Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
+
+    $ cp -i .../cpbak.bash.sample ~/bin/cpbak/cpbak-$REM.bash
+    $ vim ~/bin/cpbak-$REM.bash
+    $ chmod +x ~/bin/cpbak-$REM.bash
 
 []: }}}1
 
@@ -137,10 +143,13 @@
 []: {{{1
 
   Install the cpbak cron job(s) on `loc`.  Replace `$REM` w/ the name
-  of the backup host (e.g. `rem`).  If you want reports per email,
+  of the backup host(s) (e.g. `rem`).  If you want reports per email,
   install mailer [3].
 
-    $ cp /opt/src/cpbak/... ...
+    $ cp -i /opt/src/cpbak/cpbak-cron.bash.sample \
+      /opt/src/cpbak/cpbak-cron-$REM.bash
+    $ vim /opt/src/cpbak/cpbak-cron-$REM.bash
+    $ chmod +x /opt/src/cpbak/cpbak-cron-$REM.bash
 
 ### Either using cron.daily
 
@@ -150,6 +159,7 @@
     $ chmod +x /etc/cron.daily/cpbak-$REM
 
 ### or with e.g. cron.4am
+[]: {{{2
 
   Add the following line to /etc/crontab:
 
@@ -165,6 +175,8 @@
       /etc/cron.4am/cpbak-$REM
     $ vim /etc/cron.4am/cpbak-$REM
     $ chmod +x /etc/cron.4am/cpbak-$REM
+
+[]: }}}2
 
 []: }}}1
 
