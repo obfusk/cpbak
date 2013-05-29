@@ -1,24 +1,30 @@
 #!/bin/sh
 
+# This script acts as a whitelist for the command passed to ssh.
+
 set -e
 
-names='rem'     # server names; e.g. 'foo bar baz'
+names='rem'     # servers; e.g. 'foo bar baz'; no spaces in names!
 
 # --
 
 # NB: a nas may not have bash installed by default -- a static bash in
 # ~/bin/ can be used instead.
 
-bash=` which bash ` || bash="$HOME"/bin/bash
+bash=
+for x in /bin/bash "$HOME"/bin/bash; do
+  [ -x "$x" ] && { bash="$x"; break; }
+done
+[ -z "$bash" ] && { echo 'bash not found' >&2; exit 1; }
 
 # --
 
 for name in $names; do
   script="./bin/cpbak-$name.bash"
-  if [ "$SSH_ORIGINAL_COMMAND" == "$script" ]; then
-    exec "$script" ; exit 1
-  fi
+  [ "$SSH_ORIGINAL_COMMAND" == "$script" ] && exec "$bash" "$script"
 done
 
 echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
 exit 1
+
+# vim: set tw=70 sw=2 sts=2 et fdm=marker :

@@ -10,7 +10,7 @@ script=/opt/src/cpbak/cpbak-cron-"$name".bash
 
 export MAILER_SUBJECT="cpbak of $name @ ` date +'%F %T' `"
 mkdir -p /var/log/cpbak
-sudo -H -u "$user" "$script" 2>&1 \
+sudo -H -u "$user" -n "$script" 2>&1 \
   | tee -a /var/log/cpbak/"$name".log | /opt/src/mailer/mailer.bash
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :

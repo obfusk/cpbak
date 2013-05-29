@@ -1,26 +1,23 @@
 #!/bin/sh
 
+# This script acts as a whitelist for the command passed to ssh.
+
 set -e
 
-rsync_cmd='rsync --server --sender -vlogDtpre.iLsf . __foo__/'
+from=/__data/srvbak               # srvbak base_dir; no spaces!
+rsync_cmd="rsync --server --sender -vlogDtpre.iLsf . $from/"
 
-$ rsync -e 'ssh -p 2222' -av --delete test@localhost:__foo__/ \
-  ./__foo__/
-LOCK
-...
-UNLOCK
+  lock=/opt/src/srvbak/srvbak-lock.bash
+unlock=/opt/src/srvbak/srvbak-unlock.bash
 
 # --
 
-case "$SSH_ORIGINAL_COMMAND" in
-  "$rsync_cmd")
-    echo LOCK >&2
-    $rsync_cmd ; ret="$?"
-    echo UNLOCK >&2
-    exit "$ret"
-  ;;
-  *)
-    echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
-    exit 1
-  ;;
-esac
+if [ "$SSH_ORIGINAL_COMMAND" == "$rsync_cmd" ]; then
+  atexit () { sudo -n "$unlock"; } ; trap atexit 0
+  sudo -n "$lock" ; $rsync_cmd ; exit "$?"
+else
+  echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
+  exit 1
+fi
+
+# vim: set tw=70 sw=2 sts=2 et fdm=marker :
