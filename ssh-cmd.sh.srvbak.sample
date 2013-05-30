@@ -12,7 +12,7 @@ unlock=/opt/src/srvbak/srvbak-unlock.bash
 
 # --
 
-if [ "$SSH_ORIGINAL_COMMAND" == "$rsync_cmd" ]; then
+if [ "$SSH_ORIGINAL_COMMAND" = "$rsync_cmd" ]; then
   atexit () { sudo -n "$unlock"; } ; trap atexit 0
   sudo -n "$lock" ; $rsync_cmd ; exit "$?"
 else

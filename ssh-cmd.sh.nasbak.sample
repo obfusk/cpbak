@@ -21,7 +21,7 @@ done
 
 for name in $names; do
   script="./bin/cpbak-$name.bash"
-  [ "$SSH_ORIGINAL_COMMAND" == "$script" ] && exec "$bash" "$script"
+  [ "$SSH_ORIGINAL_COMMAND" = "$script" ] && exec "$bash" "$script"
 done
 
 echo "ssh command not allowed: $SSH_ORIGINAL_COMMAND" >&2
