@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-    Date        : 2013-05-28
+    Date        : 2013-05-30
 
     Copyright   : Copyright (C) 2013  Felix C. Stegerman
     Version     : 0.2.0-dev
@@ -163,7 +163,7 @@ Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
 
   Add the following line to /etc/crontab:
 
-    25 2 * * * root  cd / && run-parts --report /etc/cron.4am
+    5 4 * * * root  cd / && run-parts --report /etc/cron.4am
 
   And:
 
