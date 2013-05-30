@@ -4,7 +4,7 @@
 #
 # File        : rsync-rot.bash
 # Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-# Date        : 2013-05-26
+# Date        : 2013-05-30
 #
 # Copyright   : Copyright (C) 2013  Felix C. Stegerman
 # Licence     : GPLv2
@@ -24,8 +24,8 @@ function die () { echo "$@" >&2; exit 1; }
 # Usage: run <cmd> <arg(s)>
 function run () { echo "==> $@"; "$@"; echo; }
 
-# Usage: pipe_ckh [<msg(s)>]
-function pipe_ckh ()
+# Usage: pipe_chk [<msg(s)>]
+function pipe_chk ()
 {                                                               # {{{1
   local ps=( "${PIPESTATUS[@]}" ) x
   for x in "${ps[@]}"; do
@@ -49,15 +49,15 @@ function head_neg ()
 # --
 
 # Usage: ls_backups <dir>
-function ls_backups () { ls "$1" | grep0 -E '^[0-9]{4}-'; pipe_ckh; }
+function ls_backups () { ls "$1" | grep0 -E '^[0-9]{4}-'; pipe_chk; }
 
 # Usage: last_backup <dir>
-function last_backup () { ls_backups "$1" | tail -n 1; pipe_ckh; }
+function last_backup () { ls_backups "$1" | tail -n 1; pipe_chk; }
 
 # Usage: obsolete_backups <dir>
 # NB: b/c busybox has no `head -n -$K` we use head_neg instead.
 function obsolete_backups ()
-{ ls_backups "$1" | head_neg "$keep_last"; pipe_ckh; }
+{ ls_backups "$1" | head_neg "$keep_last"; pipe_chk; }
 
 # Usage: cp_last_backup <dir> <path>
 # Copies last backup in <dir> (if one exists) to <path> using hard
