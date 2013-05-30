@@ -138,7 +138,7 @@
 
 Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
 
-    $ cp -i .../cpbak.bash.sample ~/bin/cpbak/cpbak-$REM.bash
+    $ cp -i .../cpbak.bash.sample ~/bin/cpbak-$REM.bash
     $ vim ~/bin/cpbak-$REM.bash
     $ chmod +x ~/bin/cpbak-$REM.bash
 
