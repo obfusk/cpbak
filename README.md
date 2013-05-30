@@ -95,6 +95,9 @@
     #   command="./bin/ssh-cmd.bash",
     #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
 
+    cpbak@loc$ ssh srvbak@rem FAIL  # confirm fingerprint
+    cpbak@loc$ ssh nasbak@nas FAIL  # confirm fingerprint
+
   Replace `...KEY...` with the contents of `cpbak@loc`'s
   `~/.ssh/id_rsa.pub`.
 
