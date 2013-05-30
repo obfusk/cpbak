@@ -87,12 +87,12 @@
     srvbak@rem$ ssh-keygen    # no password
     srvbak@rem$ vim .ssh/authorized_keys
     # on a single line, add:
-    #   command="./bin/ssh-cmd.bash",no-agent-forwarding,
+    #   command="./bin/ssh-cmd.sh",no-agent-forwarding,
     #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
 
     nasbak@nas$ vim .ssh/authorized_keys
     # on a single line, add:
-    #   command="./bin/ssh-cmd.bash",
+    #   command="./bin/ssh-cmd.sh",
     #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
 
     cpbak@loc$ ssh srvbak@rem FAIL  # confirm fingerprint
@@ -124,16 +124,16 @@
 #### srvbak@rem
 
     $ mkdir -p ~/bin
-    $ cp -i .../ssh-cmd.srvbak.sample ~/bin/ssh-cmd
-    $ chmod +x ~/bin/ssh-cmd
+    $ cp -i .../ssh-cmd.sh.srvbak.sample ~/bin/ssh-cmd.sh
+    $ chmod +x ~/bin/ssh-cmd.sh
 
 #### nasbak@nas
 
     $ mkdir -p ~/bin
     $ cp -i .../rsync-rot.bash ~/bin/
-    $ cp -i .../ssh-cmd.nasbak.sample ~/bin/ssh-cmd
-    $ vim ~/bin/ssh-cmd
-    $ chmod +x ~/bin/ssh-cmd
+    $ cp -i .../ssh-cmd.sh.nasbak.sample ~/bin/ssh-cmd.sh
+    $ vim ~/bin/ssh-cmd.sh
+    $ chmod +x ~/bin/ssh-cmd.sh
 
 Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
 
