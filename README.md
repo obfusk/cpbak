@@ -110,6 +110,7 @@
 
     $ cd /opt/src/srvbak
     $ cp -i srvbak.sudoers.sample /etc/sudoers.d/srvbak
+    $ chmod 440 /etc/sudoers.d/srvbak
     $ cp -i srvbak-lock.bash{.sample,}
     $ cp -i srvbak-unlock.bash{.sample,}
     $ chmod +x srvbak-{,un}lock.bash
