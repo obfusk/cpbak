@@ -125,6 +125,7 @@
 
     $ mkdir -p ~/bin
     $ cp -i .../ssh-cmd.sh.srvbak.sample ~/bin/ssh-cmd.sh
+    $ vim ~/bin/ssh-cmd.sh
     $ chmod +x ~/bin/ssh-cmd.sh
 
 #### nasbak@nas
