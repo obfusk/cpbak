@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-    Date        : 2013-05-30
+    Date        : 2013-05-31
 
     Copyright   : Copyright (C) 2013  Felix C. Stegerman
     Version     : 0.2.0-dev
@@ -105,6 +105,13 @@
 
 ### srvbak (un)locking
 []: {{{1
+
+#### BE CAREFUL
+
+  Modifying sudoers files can be dangerous as it can make sudo
+  unusable; use `visudo -c -f file` to check the syntax of a sudoers
+  file before copying it to e.g. /etc/sudoers.d; use `visudo -f file`
+  to edit a sudoers file safely.
 
   When using srvbak, on `rem`:
 
