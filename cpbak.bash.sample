@@ -16,6 +16,7 @@ keep_last=14                      # keep last 14 backups
 # static bash in ~/bin/ can be used instead.
 
 "$BASH" "$HOME"/bin/rsync-rot.bash \
-  "$keep_last" "$user@$host:$from" "$to_base" -a -v --delete
+  "$keep_last" "$user@$host:$from" "$to_base" -a -v --delete \
+  --exclude=/.var                 # exclude $from/.var
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
