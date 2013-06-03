@@ -94,6 +94,5 @@ run mkdir -p "$base_dir"
 cp_last_backup "$base_dir" "$to"
 run rsync "$@" "$from"/ "$to"/
 rm_obsolete_backups "$base_dir"
-echo
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
