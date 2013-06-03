@@ -10,9 +10,9 @@ user=nasbak     # change to username on file server
 
 echo "cpbak of $name @ $( date +'%F %T' )" ; echo
 eval "$( ssh-agent -s )" ; ssh-add ; echo
-echo "==> ssh $user@host ..." ; echo
+echo "==> ssh $user@$host ..." ; echo
 ssh -A "$user@$host" "./bin/cpbak-$name.bash"
-echo "<== ssh $user@host"
+echo "... ssh $user@$host <=="
 echo
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
