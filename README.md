@@ -84,7 +84,6 @@
 
     cpbak@loc$  ssh-keygen    # no password
 
-    srvbak@rem$ ssh-keygen    # no password
     srvbak@rem$ vim .ssh/authorized_keys
     # on a single line, add:
     #   command="./bin/ssh-cmd.sh",no-agent-forwarding,
@@ -95,8 +94,11 @@
     #   command="./bin/ssh-cmd.sh",
     #   no-port-forwarding,no-pty,no-X11-forwarding ...KEY...
 
-    cpbak@loc$ ssh srvbak@rem FAIL  # confirm fingerprint
-    cpbak@loc$ ssh nasbak@nas FAIL  # confirm fingerprint
+    cpbak@loc$  echo 'PasswordAuthentication = no' >> .ssh/config
+    nasbak@nas$ echo 'PasswordAuthentication = no' >> .ssh/config
+
+    cpbak@loc$  ssh nasbak@nas FAIL   # confirm fingerprint
+    nasbak@nas$ ssh srvbak@rem FAIL   # confirm fingerprint
 
   Replace `...KEY...` with the contents of `cpbak@loc`'s
   `~/.ssh/id_rsa.pub`.
