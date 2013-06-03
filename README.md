@@ -2,7 +2,7 @@
 
     File        : README.md
     Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-    Date        : 2013-05-31
+    Date        : 2013-06-03
 
     Copyright   : Copyright (C) 2013  Felix C. Stegerman
     Version     : 0.2.0-dev
@@ -173,13 +173,8 @@ Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
 ### or with e.g. cron.4am
 []: {{{2
 
-  Add the following line to /etc/crontab:
-
-    5 4 * * * root  cd / && run-parts --report /etc/cron.4am
-
-  And:
-
     $ mkdir -p /etc/cron.4am
+    $ cp -i /opt/src/cpbak/crontab.4am.sample /etc/cron.d/4am
 
   Then:
 
