@@ -4,7 +4,7 @@
 #
 # File        : rsync-rot.bash
 # Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-# Date        : 2013-05-30
+# Date        : 2013-06-03
 #
 # Copyright   : Copyright (C) 2013  Felix C. Stegerman
 # Licence     : GPLv2
@@ -89,9 +89,11 @@ function rm_obsolete_backups ()
 keep_last="$1" from="$2" base_dir="$3" ; shift 3
 to="$base_dir/$date"
 
+echo "rsync-rot [$from -> $to]" ; echo
 run mkdir -p "$base_dir"
 cp_last_backup "$base_dir" "$to"
 run rsync "$@" "$from"/ "$to"/
 rm_obsolete_backups "$base_dir"
+echo
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
