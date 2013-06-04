@@ -5,7 +5,7 @@
 set -e
 
 from=/__data/srvbak               # srvbak base_dir; no spaces!
-rsync_cmd="rsync --server --sender -vlogDtpre.iLsf . $from/"
+rsync_cmd="rsync --server --sender -vlogDtre.iLsf . $from/"
 
   lock=/opt/src/srvbak/srvbak-lock.bash
 unlock=/opt/src/srvbak/srvbak-unlock.bash
