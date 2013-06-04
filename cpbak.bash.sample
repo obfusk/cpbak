@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+umask 0077
 
 name=rem                          # change to e.g. hostname
 host=rem                          # change to hostname/ip of server
@@ -17,6 +18,6 @@ keep_last=14                      # keep last 14 backups
 
 "$BASH" "$HOME"/bin/rsync-rot.bash \
   "$keep_last" "$user@$host:$from" "$to_base" -a -v --delete \
-  --exclude=/.var                 # exclude $from/.var
+  --no-perms --exclude=/.var      # exclude $from/.var!
 
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
