@@ -20,4 +20,6 @@ keep_last=14                      # keep last 14 backups
   "$keep_last" "$user@$host:$from" "$to_base" -a -v --delete \
   --no-perms --exclude=/.var      # exclude $from/.var!
 
+echo "==> df -h $to_base" ; df -h "$to_base" ; echo
+
 # vim: set tw=70 sw=2 sts=2 et fdm=marker :
