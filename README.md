@@ -5,7 +5,7 @@
     Date        : 2013-06-03
 
     Copyright   : Copyright (C) 2013  Felix C. Stegerman
-    Version     : 0.4.2
+    Version     : 0.4.3
 
 []: }}}1
 
@@ -182,6 +182,17 @@ Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
     $ chmod +x /etc/cron.4am/cpbak-$REM
 
 []: }}}2
+
+[]: }}}1
+
+## Logrotate
+[]: {{{1
+
+  If you (use the cron job to) write to e.g. `/var/log/cpbak/*.log` on
+  `loc`, you may want to use logrotate.
+
+    $ cp -i /opt/src/cpbak/cpbak.logrotate.sample \
+      /etc/logrotate.d/cpbak
 
 []: }}}1
 
