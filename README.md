@@ -2,10 +2,10 @@
 
     File        : README.md
     Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-    Date        : 2013-06-03
+    Date        : 2014-04-01
 
     Copyright   : Copyright (C) 2013  Felix C. Stegerman
-    Version     : 0.4.3
+    Version     : 0.4.4
 
 []: }}}1
 
@@ -58,7 +58,7 @@
   Clone the cpbak repository on `loc`:
 
     $ mkdir -p /opt/src
-    $ git clone https://github.com/noxqsgit/cpbak.git /opt/src/cpbak
+    $ git clone https://github.com/obfusk/cpbak.git /opt/src/cpbak
 
 ### Users
 []: {{{1
@@ -210,10 +210,10 @@ Replace `$REM` w/ the name of the backup host(s) (e.g. `rem`).
   --- http://www.opensource.org/licenses/GPL-2.0
 
   [2] srvbak
-  --- https://github.com/noxqsgit/srvbak
+  --- https://github.com/obfusk/srvbak
 
   [3] mailer
-  --- https://github.com/noxqsgit/mailer
+  --- https://github.com/obfusk/mailer
 
 []: }}}1
 
